@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vue-el-footer不贴底部解决办法 | My Blog</title><meta name="author" content="DoubleSang"><meta name="copyright" content="DoubleSang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前端遇到这样的问题element官网是这样的,已经有现成的，开干！但是！主页使用的el-footer看起来还很正常切到别的页面变成这样了，最底下多了一个很明显的白条强迫症直接发作 12345678910111213141516&#x2F;* 整个页面布局使用 flexbox *&#x2F;.app &#123;  display: flex;  flex-direction: column;  min-height:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue-el-footer不贴底部解决办法">
+<meta property="og:url" content="https://doublesang.github.io/2024/02/17/Vue-el-footer%E4%B8%8D%E8%B4%B4%E5%BA%95%E9%83%A8%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/index.html">
+<meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="前端遇到这样的问题element官网是这样的,已经有现成的，开干！但是！主页使用的el-footer看起来还很正常切到别的页面变成这样了，最底下多了一个很明显的白条强迫症直接发作 12345678910111213141516&#x2F;* 整个页面布局使用 flexbox *&#x2F;.app &#123;  display: flex;  flex-direction: column;  min-height:">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/DoubleSang.png">
+<meta property="article:published_time" content="2024-02-17T04:23:33.000Z">
+<meta property="article:modified_time" content="2025-06-24T11:21:41.906Z">
+<meta property="article:author" content="DoubleSang">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/DoubleSang.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Vue-el-footer不贴底部解决办法",
+  "url": "https://doublesang.github.io/2024/02/17/Vue-el-footer%E4%B8%8D%E8%B4%B4%E5%BA%95%E9%83%A8%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/",
+  "image": "https://github.com/DoubleSang.png",
+  "datePublished": "2024-02-17T04:23:33.000Z",
+  "dateModified": "2025-06-24T11:21:41.906Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "DoubleSang",
+      "url": "https://doublesang.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://doublesang.github.io/2024/02/17/Vue-el-footer%E4%B8%8D%E8%B4%B4%E5%BA%95%E9%83%A8%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vue-el-footer不贴底部解决办法',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">My Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">Vue-el-footer不贴底部解决办法</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Vue-el-footer不贴底部解决办法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-02-17T04:23:33.000Z" title="发表于 2024-02-17 12:23:33">2024-02-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-24T11:21:41.906Z" title="更新于 2025-06-24 19:21:41">2025-06-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>前端遇到这样的问题<br><a target="_blank" rel="noopener" href="https://element.eleme.cn/#/zh-CN/component/container#footer-attributes">element官网</a>是这样的,已经有现成的，开干！<br><img src="/images/54587ab0fbc616b1637f4362001c890c.png" alt="在这里插入图片描述"><br><strong>但是！</strong><br>主页使用的el-footer看起来还很正常<br><img src="/images/19d752ee207626e146bea3acaf51e719.png" alt="在这里插入图片描述"><br>切到别的页面变成这样了，最底下多了一个很明显的<strong>白条</strong><br><del>强迫症直接发作</del><br><img src="/images/2b87160a3fb51d99421fff78088c4461.png" alt="在这里插入图片描述"></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 整个页面布局使用 flexbox */</span></span><br><span class="line"><span class="selector-class">.app</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">min-height</span>: <span class="number">100vh</span>; <span class="comment">/* 确保页面至少与浏览器视口一样高 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 页面主体内容填充剩余空间 */</span></span><br><span class="line"><span class="selector-class">.content</span> &#123;</span><br><span class="line">  <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 固定底部 */</span></span><br><span class="line"><span class="selector-class">.footer</span> &#123;</span><br><span class="line">  <span class="attribute">flex-shrink</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--容器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-container</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    	 <span class="comment">&lt;!--主体--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">         <span class="comment">&lt;!--底部--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-footer</span>  <span class="attr">class</span>=<span class="string">&quot;footer&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">el-footer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以愉快的打代码啦~<br><img src="/images/4eb8044662279ce0df3f02ecfd7e10b6.png" alt="在这里插入图片描述"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://doublesang.github.io">DoubleSang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://doublesang.github.io/2024/02/17/Vue-el-footer%E4%B8%8D%E8%B4%B4%E5%BA%95%E9%83%A8%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">https://doublesang.github.io/2024/02/17/Vue-el-footer%E4%B8%8D%E8%B4%B4%E5%BA%95%E9%83%A8%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://doublesang.github.io" target="_blank">My Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue/">Vue</a></div><div class="post-share"><div class="social-share" data-image="https://github.com/DoubleSang.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/11/26/Android-RSA-%E5%8A%A0%E5%AF%86/" title="Android RSA 加密"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Android RSA 加密</div></div><div class="info-2"><div class="info-item-1">在一些信息传输的过程中，需要对信息进行加解密。服务端使用RSA进行加解密。但是有一个问题，使用服务端提供的公私钥，在测试类运行的结果服务端能正常解密，在真机环境中结果服务端却无法解密。 后面发现是服务端rsa加密方式与Android端rsa加密方式不一致、服务端的Base64编码与Android使用的Base64编码不一致，导致服务端对客户端传来的加密数据解密失败。 Android的rsa加密方式是RSA&#x2F;ECB&#x2F;NoPadding，而标准jdk是RSA&#x2F;ECB&#x2F;PKCS1Padding。所以在Android加解密的时候需要使用标准jdk的加密方式，服务端才能正常地加解密。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546import java.security.KeyFactoryimport java.security.interfaces.RSAPrivateKeyimport java.security.interf...</div></div></div></a><a class="pagination-related" href="/2024/01/26/Mybatis-Plus%E6%95%B4%E5%90%88Mybatis%E9%A1%B9%E7%9B%AE/" title="Mybatis-Plus整合Mybatis项目"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Mybatis-Plus整合Mybatis项目</div></div><div class="info-2"><div class="info-item-1">做小项目，把mybatis改成mybatisplus图方便。结果到了多表查询开始傻眼。自定义xml写sql多表查询语句一直出现Invalid bound statement (not found)，但是原有的查询语句均能正常运行。 解决方案一：在Mapper中写@select注解12345678910111213141516171819202122232425262728//根据用户id查找用户名//左连接 根据用户id查找用户昵称@Select(&quot;&lt;script&gt;&quot; +        &quot;SELECT information.*, `user`. `name` AS username &quot; +        &quot;FROM information &quot; +        &quot;LEFT JOIN `user` ON information.user_id = `user`.id &quot; +        &quot;WHERE information.`name` LIKE CONCAT(&#x27;%&...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/01/05/Vue-%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E8%AF%A6%E6%83%85%E9%A1%B5%E4%BF%AE%E6%94%B9%E4%BB%A5%E5%8F%8A%E5%90%8C%E6%AD%A5/" title="Vue-个人信息详情页修改以及同步"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-05</div><div class="info-item-2">Vue-个人信息详情页修改以及同步</div></div><div class="info-2"><div class="info-item-1">之前做过一次项目又忘了，这次记录一下也就是这个”个人信息”的小细节思路：在登录成功直接保存用户基本信息到全局user，随后在需要获取的时候再从user中取出。退出账户的时候删除user的相关信息第一步：在登录成功直接保存用户基本信息到全局userLoginView.vue登录页面： 123456789101112131415161718192021&lt;script&gt;  methods: &#123;    login() &#123;      this.$refs[&quot;form&quot;].validate((valid) =&gt; &#123;        if (valid) &#123;          request.post(&quot;/user/login&quot;, this.form).then((res) =&gt; &#123;            if (res.code === 0) &#123;              this.$message.success(&quot;登录成功&quot;);          ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://github.com/DoubleSang.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">DoubleSang</div><div class="author-info-description">Hello, I am DoubleSang.</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/DoubleSang"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/24/Hexo-%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2/" title="Hexo 博客部署">Hexo 博客部署</a><time datetime="2025-06-24T11:09:50.000Z" title="发表于 2025-06-24 19:09:50">2025-06-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/03/Android-%E7%BC%96%E8%AF%91FFmpeg4-3-1%E5%B9%B6%E9%9B%86%E6%88%90x264/" title="Android 编译FFmpeg4.3.1并集成x264">Android 编译FFmpeg4.3.1并集成x264</a><time datetime="2025-06-03T09:54:40.000Z" title="发表于 2025-06-03 17:54:40">2025-06-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/26/Android-RSA-%E5%8A%A0%E5%AF%86/" title="Android RSA 加密">Android RSA 加密</a><time datetime="2024-11-26T09:56:11.000Z" title="发表于 2024-11-26 17:56:11">2024-11-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/17/Vue-el-footer%E4%B8%8D%E8%B4%B4%E5%BA%95%E9%83%A8%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="Vue-el-footer不贴底部解决办法">Vue-el-footer不贴底部解决办法</a><time datetime="2024-02-17T04:23:33.000Z" title="发表于 2024-02-17 12:23:33">2024-02-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/26/Mybatis-Plus%E6%95%B4%E5%90%88Mybatis%E9%A1%B9%E7%9B%AE/" title="Mybatis-Plus整合Mybatis项目">Mybatis-Plus整合Mybatis项目</a><time datetime="2024-01-26T12:25:08.000Z" title="发表于 2024-01-26 20:25:08">2024-01-26</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By DoubleSang</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.0-b2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
